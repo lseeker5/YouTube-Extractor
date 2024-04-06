@@ -2,18 +2,14 @@
 import requests
 from pytube import YouTube
 
-def main(req: func.HttpRequest) -> func.HttpResponse:
+def download_audio_from_youtube(video_url):
     try:
-        req_body = req.get_json()
-        video_url = req_body['video_url']
-        
         yt = YouTube(video_url)
         audio_stream = yt.streams.filter(only_audio=True).first()
         audio_stream.download('/Internal storage/Download') 
-        
-        return func.HttpResponse("Download complete", status_code=200)
+        return "Download complete"
     except Exception as e:
-        return func.HttpResponse(f"Error: {str(e)}", status_code=500)
+        return f"Error: {str(e)}"
     
 
-    
+
